@@ -63,16 +63,7 @@ userSchema.methods.validPassword = function (password) {
 userSchema.methods.generateJwt = function () {
   var expiry = new Date();
   expiry.setDate(expiry.getDate() + 7);
-  const refreshToken = jwt.sign(
-    {
-      _id: this._id,
-      name: this.name,
-      email: this.email,
-      name: this.name,
-      exp: parseInt(expiry.getTime() / 10),
-    },
-    process.env.REFRESH_TOKEN_SECRET
-  );
+
   const accessToken = jwt.sign(
     {
       _id: this._id,

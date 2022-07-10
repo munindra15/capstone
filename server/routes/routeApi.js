@@ -4,6 +4,7 @@ const ctrlUser = require("../controllers/user");
 const authorization = require("../authorization/tokenVerification");
 const ctrlQuestion = require("../controllers/question.controller");
 const ctrlAnswer = require("../controllers/answer.controller");
+const ctrlProfile = require("../controllers/profile.controller");
 
 //
 //
@@ -37,6 +38,11 @@ router
 router
   .route("/:userid/askQuestion")
   .post(authorization.verifyToken, ctrlQuestion.createQuestion);
+
+//Fetch user Profile
+router
+  .route("/:userid/profile")
+  .get(authorization.verifyToken, ctrlProfile.profile);
 
 //Fetch ALL the QUESTIONS
 //Get QUESTION Route
