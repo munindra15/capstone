@@ -88,37 +88,40 @@ export class QuestionComponent implements OnInit {
     //console.log('Sending GET request');
     this.dataService.getSingleQuestion(id).subscribe(
       (data) => {
-        this.question = data;
+        if (!data) {
+          this.router.navigateByUrl('**');
+        } else {
+          this.question = data;
+          //Check if questions has answers
+          if (this.question.answers.length) {
+            this.isAns = true;
+          }
 
-        //Check if questions has answers
-        if (this.question.answers.length) {
-          this.isAns = true;
-        }
+          //check if current user is the asker
+          if (this.question?.owner._id === this.authService.getUserId()) {
+            this.isAnsByCurrentUser = true;
+            this.isQuesByCurrentUser = true;
+          }
 
-        //check if current user is the asker
-        if (this.question?.owner._id === this.authService.getUserId()) {
-          this.isAnsByCurrentUser = true;
-          this.isQuesByCurrentUser = true;
-        }
+          //Check if current user has answered a question to display edit answer button
+          if (this.isAns) {
+            this.question.answers.find((id: any) => {
+              if (id.author._id === this.authService.getUserId()) {
+                id.isAnsByCurrentUser = true;
+                this.isAnsByCurrentUser = true;
+              }
+            });
+          }
 
-        //Check if current user has answered a question to display edit answer button
-        if (this.isAns) {
-          this.question.answers.find((id: any) => {
-            if (id.author._id === this.authService.getUserId()) {
-              id.isAnsByCurrentUser = true;
-              this.isAnsByCurrentUser = true;
-            }
-          });
-        }
+          //Check if question is liked by current user
+          if (this.question.likedBy.includes(this.authService.getUserId())) {
+            this.isLikedByUser = true;
+            this.isLiked = true;
+          }
 
-        //Check if question is liked by current user
-        if (this.question.likedBy.includes(this.authService.getUserId())) {
-          this.isLikedByUser = true;
-          this.isLiked = true;
-        }
-
-        if (this.question.likes) {
-          this.numberOfLikes = this.question.likes;
+          if (this.question.likes) {
+            this.numberOfLikes = this.question.likes;
+          }
         }
       },
       (error) => {
