@@ -4,6 +4,7 @@ const ctrlUser = require("../controllers/user");
 const authorization = require("../authorization/tokenVerification");
 const ctrlQuestion = require("../controllers/question.controller");
 const ctrlAnswer = require("../controllers/answer.controller");
+const ctrlProfile = require("../controllers/profile.controller");
 
 //
 //
@@ -20,6 +21,11 @@ router.route("/users/login").post(ctrlUser.loginModule);
 router
   .route("/:userid/updateUser")
   .put(authorization.verifyToken, ctrlUser.updateUserModule);
+
+//Fetch user Profile
+router
+  .route("/:userid/profile")
+  .get(authorization.verifyToken, ctrlProfile.profile);
 
 //User by email
 router.route("/users/findUserByEmail/:emailid").get(ctrlUser.findUserByEmail);
