@@ -44,6 +44,11 @@ router
   .route("/:userid/askQuestion")
   .post(authorization.verifyToken, ctrlQuestion.createQuestion);
 
+//Fetch user Profile
+router
+  .route("/:userid/profile")
+  .get(authorization.verifyToken, ctrlProfile.profile);
+
 //Fetch ALL the QUESTIONS
 //Get QUESTION Route
 router.route("/questions").get(ctrlQuestion.getQuestions);
