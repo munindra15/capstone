@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { questions } from '../models/question.model';
-import { DataService } from '../services/data.service';
-import { faEdit, faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
-import { AuthenticationService } from '../auth/authentication.service';
-import { coerceNumberProperty } from '@angular/cdk/coercion';
-import { Observable } from 'rxjs';
+import { questions } from '../../models/question.model';
+import { DataService } from '../../services/data.service';
+import { AuthenticationService } from '../../auth/authentication.service';
 
 @Component({
   selector: 'app-question',
@@ -14,10 +10,6 @@ import { Observable } from 'rxjs';
   styleUrls: ['./question.component.css'],
 })
 export class QuestionComponent implements OnInit {
-  farHeart = farHeart;
-  fasHeart = fasHeart;
-  faEdit = faEdit;
-
   questions?: questions[];
   question: any;
 
@@ -30,8 +22,8 @@ export class QuestionComponent implements OnInit {
 
   public id: any;
 
-  public totalAnswers = 0;
-  public numberOfLikes = 0;
+  public totalAnswers: number = 0;
+  public numberOfLikes: number = 0;
   isEdit: boolean = false;
 
   constructor(
@@ -134,9 +126,8 @@ export class QuestionComponent implements OnInit {
   }
 
   //Like button
-  likeButton(id: string) {
-    this.dataService.likeQuestion(id).subscribe((data) => {
-      //console.log(data);
+  likeButton(questionId: any) {
+    this.dataService.likeQuestion(questionId).subscribe((data) => {
       this.isLiked = true;
       this.isLikedByUser = true;
       this.numberOfLikes++;
@@ -144,18 +135,11 @@ export class QuestionComponent implements OnInit {
   }
 
   //Unlike Button
-  unlikeButton(id: string) {
-    this.dataService.unlikeQuestion(id).subscribe((data) => {
-      //console.log(data);
+  unlikeButton(questionId: any) {
+    this.dataService.unlikeQuestion(questionId).subscribe((data) => {
       this.isLiked = false;
       this.isLikedByUser = false;
       this.numberOfLikes--;
     });
-  }
-
-  editToggle() {
-    //console.log();
-    this.isEdit = true;
-    this.getQuestionById(this.id);
   }
 }

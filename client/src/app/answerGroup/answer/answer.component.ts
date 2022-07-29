@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DataService } from 'src/app/services/data.service';
+import { DataService } from '../../services/data.service';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { answers } from 'src/app/models/question.model';
+import { switchMap } from 'rxjs';
+import { stringLength } from '@firebase/util';
 
 @Component({
   selector: 'app-answer',
@@ -13,18 +16,16 @@ export class AnswerComponent implements OnInit {
   // ICON
   faCross = faTimesCircle;
 
-  saveAnswerForm!: FormGroup;
-  saveEditAnswerForm!: FormGroup;
   isAnswerParam: boolean = false;
   questionId: any;
   answerId: any;
   question: any;
   tempData: any;
+  fetchedAnswer: any;
 
   constructor(
     private dataService: DataService,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
     private router: Router
   ) {}
 
@@ -32,43 +33,48 @@ export class AnswerComponent implements OnInit {
     this.questionId = this.route.snapshot.paramMap.get('questionId');
     this.answerId = this.route.snapshot.paramMap.get('answerId');
 
-    this.saveAnswerForm = this.formBuilder.group({
-      text: '',
-    });
-    //Edit Answer Form
-    this.saveEditAnswerForm = this.formBuilder.group({
-      text: '',
-    });
-
     if (this.answerId) {
       this.isAnswerParam = true;
+      this.fetchAnswer();
+      //console.log(this.fetchedAnswer);
     }
-    this.fetchAnswer();
     this.fetchQuestion();
   }
 
-  saveAnswer() {
+  saveAnswer(answer: string) {
+    this.dataService.saveAnswer(this.questionId, answer).subscribe((res) => {});
+    this.router.navigateByUrl(`/questions/${this.questionId}`);
+  }
+
+  setText(string: string) {
+    this.fetchedAnswer = string;
+  }
+  saveEditedAnswer(answer: string) {
+    this.dataService.modifyAnswer(this.answerId, answer).subscribe((res) => {});
+    this.router.navigateByUrl(`/questions/${this.questionId}`);
+  }
+
+  deleteAnswer() {
     this.dataService
-      .saveAnswer(this.questionId, this.saveAnswerForm.value)
-      .subscribe((res) => {});
+      .deleteAnswer(this.answerId, this.questionId)
+      .subscribe((res) => {
+        //console.log(res);
+      });
     this.router.navigateByUrl(`/questions/${this.questionId}`);
   }
 
   fetchAnswer() {
-    this.dataService.getAnswers().subscribe((data) => {
-      this.tempData = data.find((item) => {
-        this.saveEditAnswerForm.patchValue({
-          text: `${item.text}`,
-        });
-        return item._id === this.answerId;
-      });
-    });
-  }
-  saveEditedAnswer() {
-    this.dataService
-      .modifyAnswer(this.answerId, this.saveEditAnswerForm.value)
-      .subscribe((res) => {});
-    this.router.navigateByUrl(`/questions/${this.questionId}`);
+    this.dataService.getSingleAnswer(this.answerId).subscribe(
+      (data) => {
+        this.fetchedAnswer = data;
+        //console.log(this.fetchedAnswer.text);
+      },
+      (error) => {
+        if (error.status === 400) {
+          this.router.navigateByUrl('**');
+        }
+      }
+    );
   }
 
   fetchQuestion() {

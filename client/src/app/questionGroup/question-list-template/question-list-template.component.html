@@ -1,0 +1,54 @@
+<div class="row content">
+  <div class="col-md-12 m-3">
+    <div class="m-2 border-bottom" *ngFor="let question of Questions">
+      <div class="card mt-2 border">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-8">
+              <h5 class="card-title fw-bold">
+                <a class="" routerLink="/questions/{{ question._id }}">{{
+                  question.title
+                }}</a>
+              </h5>
+              <p class="card-text muted overflow-information">
+                {{ question.text }}
+              </p>
+              <div *ngIf="question?.isEdited" class="edited">(edited)</div>
+            </div>
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col">
+                  <a class="" routerLink="/questions/{{ question._id }}">
+                    <div class="answers-bg">
+                      <span class="answers">
+                        {{ question.answers | commaSeperator }}
+                      </span>
+                    </div>
+                  </a>
+                </div>
+                <div class="col">
+                  <div class="counter-bg">
+                    <span class="answers">{{ question.likes }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col mt-2">answers</div>
+                <div class="col mt-2 ps-4">likes</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer text-muted mt-4">
+          <strong
+            ><cite title="username">{{ question.owner?.name }}</cite></strong
+          >
+          <span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Asked on
+            {{ question.issued_On | date: "longDate" }}</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

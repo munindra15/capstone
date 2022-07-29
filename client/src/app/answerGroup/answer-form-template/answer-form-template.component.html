@@ -1,0 +1,72 @@
+<form [formGroup]="saveAnswerForm" (submit)="saveAnswer()" class="my-3">
+  <div class="form-group mb-4">
+    <label for="text" class="form-label">answer:</label>
+    <textarea
+      formControlName="text"
+      class="form-control mb-2 ms-2"
+      name="text"
+      required
+      rows="10"
+      placeholder="Write down your answer in brief."
+    ></textarea
+    ><span class="text-muted text-small fst-italic">
+      <span
+        class="text-danger"
+        *ngIf="
+          saveAnswerForm.controls.text.touched &&
+          saveAnswerForm.controls.text.errors?.required
+        "
+      >
+        <fa-icon [icon]="faCross"></fa-icon> This field cannot be empty. Please
+        enter your answer
+      </span>
+    </span>
+  </div>
+  <button
+    type="submit"
+    [disabled]="saveAnswerForm.invalid"
+    class="answer-button mb-2"
+  >
+    Post your answer
+  </button>
+</form>
+<div *ngIf="fetchedAnswer">
+  <button type="button" class="btn btn-outline-danger" (click)="openModal()">
+    Delete
+  </button>
+  <div
+    class="modal fade-bg"
+    tabindex="-1"
+    role="dialog"
+    [ngStyle]="{ display: displayStyle }"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Are you sure?</h5>
+        </div>
+        <div class="modal-body">
+          <p>
+            Once deleted the answer cannot be retrieved. Do you want to
+            continue?
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            (click)="closeModal()"
+          >
+            No</button
+          ><button
+            type="button"
+            (click)="deleteAnswer()"
+            class="btn btn-outline-success"
+          >
+            Yes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

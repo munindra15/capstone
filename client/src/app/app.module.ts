@@ -14,13 +14,13 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './account/login/login.component';
 import { RegisterComponent } from './account/register/register.component';
 import { HomeComponent } from './home/home.component';
-import { QuestionComponent } from './question/question.component';
+import { QuestionComponent } from './questionGroup/question/question.component';
 import { AuthenticationService } from './auth/authentication.service';
 import { UserProfileComponent } from './account/user-profile/user-profile.component';
 import { NavComponent } from './nav/nav.component';
 import { AuthGuard } from './auth/auth.guard';
-import { AnswerComponent } from './answer/answer.component';
-import { AskQuestionComponent } from './ask-question/ask-question.component';
+import { AnswerComponent } from './answerGroup/answer/answer.component';
+import { AskQuestionComponent } from './questionGroup/ask-question/ask-question.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 
 import { CommaSeperatorPipe } from './comma-seperator.pipe';
@@ -29,6 +29,12 @@ import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FilterPipe } from './services/filter.pipe';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { HomeBannerComponent } from './home-banner/home-banner.component';
+import { QuestionListTemplateComponent } from './questionGroup/question-list-template/question-list-template.component';
+import { QuestionDetailTemplateComponent } from './questionGroup/question-detail-template/question-detail-template.component';
+import { QuestionFormTemplateComponent } from './questionGroup/question-form-template/question-form-template.component';
+import { EditQuestionFormTemplateComponent } from './questionGroup/edit-question-form-template/edit-question-form-template.component';
+import { AnswerFormTemplateComponent } from './answerGroup/answer-form-template/answer-form-template.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -91,6 +97,12 @@ const routes: Routes = [
     AboutUsComponent,
     FilterPipe,
     PageNotFoundComponent,
+    HomeBannerComponent,
+    QuestionListTemplateComponent,
+    QuestionDetailTemplateComponent,
+    QuestionFormTemplateComponent,
+    EditQuestionFormTemplateComponent,
+    AnswerFormTemplateComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

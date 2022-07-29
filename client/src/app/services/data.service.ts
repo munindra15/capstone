@@ -21,14 +21,24 @@ export class DataService {
   public getAnswers(): Observable<answers[]> {
     return this.http.get<answers[]>(this.SERVER_API + '/api/answers').pipe(
       switchMap((answer) => {
-        //console.log(answer);
-        return of(answer as answers[]);
+        return of(answer);
       }),
       catchError((e) => {
         console.error('Server error log: ', e.error);
         return throwError('Answers not found due to server error.');
       })
     );
+  }
+
+  //GET single Answer
+  public getSingleAnswer(answerId: string): Observable<answers[]> {
+    return this.http
+      .get<answers[]>(`${this.SERVER_API}/api/answer/${answerId}`)
+      .pipe(
+        switchMap((answer) => {
+          return of(answer);
+        })
+      );
   }
 
   //Fetch User Profile
@@ -108,6 +118,13 @@ export class DataService {
     );
   }
 
+  //DELETE Question
+  public deleteQuestion(questionId: string, userId: string) {
+    return this.http.delete(
+      `${this.SERVER_API}/api/${userId}/deleteQuestion/${questionId}`
+    );
+  }
+
   //Create a Answer
   public saveAnswer(questionid: string, data: any): Observable<any> {
     //console.log(data);
@@ -120,6 +137,13 @@ export class DataService {
   //Modify an Answer
   public modifyAnswer(answerId: string, data: any) {
     return this.http.put(`${this.SERVER_API}/api/${answerId}/editAnswer`, data);
+  }
+
+  //DELETE Answer
+  public deleteAnswer(answerId: string, questionId: string) {
+    return this.http.delete(
+      `${this.SERVER_API}/api/${questionId}/deleteAnswer/${answerId}`
+    );
   }
 
   //Handle Errors

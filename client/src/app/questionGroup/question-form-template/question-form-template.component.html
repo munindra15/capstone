@@ -1,0 +1,95 @@
+<form [formGroup]="saveQuestionForm" (submit)="saveQuestion()">
+  <div class="form-group mb-4">
+    <label for="title" class="form-label">Title</label>
+    <input
+      formControlName="title"
+      class="form-control mb-2"
+      type="text"
+      name="title"
+      placeholder='Start your question with "What", "How", "Why", etc. '
+      required
+    />
+    <span class="text-muted text-small fst-italic">
+      <span
+        class="text-danger"
+        *ngIf="
+          saveQuestionForm.controls.title.touched &&
+          saveQuestionForm.controls.title.errors?.required
+        "
+      >
+        <fa-icon [icon]="faCross"></fa-icon> You cannot leave this empty. Please
+        enter a title
+      </span>
+    </span>
+  </div>
+  <div class="form-group mb-4">
+    <label for="text" class="form-label">Text</label>
+    <textarea
+      formControlName="text"
+      class="form-control mb-2"
+      name="text"
+      rows="10"
+      placeholder="Describe your question in brief to get accurate answers."
+      required
+    ></textarea>
+    <span class="text-muted text-small fst-italic">
+      <span
+        class="text-danger"
+        *ngIf="
+          saveQuestionForm.controls.text.touched &&
+          saveQuestionForm.controls.text.errors?.required
+        "
+      >
+        <fa-icon [icon]="faCross"></fa-icon> You cannot leave this empty. Please
+        explain your question a bit
+      </span>
+    </span>
+  </div>
+  <button
+    type="submit"
+    [disabled]="saveQuestionForm.invalid"
+    class="post-button mb-2"
+  >
+    Post your question
+  </button>
+</form>
+<div *ngIf="fetchQuestionTitle">
+  <button type="button" class="btn btn-outline-danger" (click)="openModal()">
+    Delete
+  </button>
+  <div
+    class="modal fade-bg"
+    tabindex="-1"
+    role="dialog"
+    [ngStyle]="{ display: displayStyle }"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Are you sure?</h5>
+        </div>
+        <div class="modal-body">
+          <p>
+            Once deleted the question cannot be retrieved. Do you want to
+            continue?
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            (click)="closeModal()"
+          >
+            No</button
+          ><button
+            type="button"
+            (click)="deleteQuestion()"
+            class="btn btn-outline-success"
+          >
+            Yes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

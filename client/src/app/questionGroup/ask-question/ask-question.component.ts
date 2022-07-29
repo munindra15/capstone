@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService } from '../auth/authentication.service';
-import { DataService } from '../services/data.service';
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { questionForm, questions } from 'src/app/models/question.model';
+import { AuthenticationService } from '../../auth/authentication.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-ask-question',
@@ -11,16 +10,15 @@ import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./ask-question.component.css'],
 })
 export class AskQuestionComponent implements OnInit {
-  // ICONS
-  faCross = faTimesCircle;
-
-  saveQuestionForm!: FormGroup;
   userId: any;
   questionId: any;
   isQuestionParam: boolean = false;
   question: any;
+
+  fetchedQuestionTitle: String = '';
+  fetchedQuestionText: String = '';
+
   constructor(
-    private formBuilder: FormBuilder,
     private router: Router,
     private dataService: DataService,
     private route: ActivatedRoute,
@@ -28,11 +26,6 @@ export class AskQuestionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.saveQuestionForm = this.formBuilder.group({
-      title: '',
-      text: '',
-    });
-
     this.questionId = this.route.snapshot.paramMap.get(`questionId`);
     this.userId = this.authService.getUserId();
     if (this.questionId) {
@@ -41,26 +34,31 @@ export class AskQuestionComponent implements OnInit {
     }
   }
 
-  saveQuestion(): void {
+  saveQuestion(form: questionForm): void {
+    this.dataService.postQuestion(this.userId, form).subscribe((res) => {
+      //console.log(res);
+    });
+    this.router.navigateByUrl('/questions');
+  }
+
+  deleteQuestion() {
     this.dataService
-      .postQuestion(this.userId, this.saveQuestionForm.value)
+      .deleteQuestion(this.questionId, this.userId)
       .subscribe((res) => {
         //console.log(res);
       });
     this.router.navigateByUrl('/questions');
   }
 
-  saveEditQuestion() {
-    this.dataService
-      .editQuestion(this.questionId, this.saveQuestionForm.value)
-      .subscribe(
-        (res) => {},
-        (error) => {
-          if (error.status === 400) {
-            this.router.navigateByUrl('**');
-          }
+  saveEditQuestion(form: questionForm) {
+    this.dataService.editQuestion(this.questionId, form).subscribe(
+      (res) => {},
+      (error) => {
+        if (error.status === 400) {
+          this.router.navigateByUrl('**');
         }
-      );
+      }
+    );
     this.router.navigateByUrl(`/questions/${this.questionId}`);
   }
 
@@ -68,10 +66,6 @@ export class AskQuestionComponent implements OnInit {
     this.dataService.getSingleQuestion(this.questionId).subscribe(
       (data) => {
         this.question = data;
-        this.saveQuestionForm.patchValue({
-          title: `${this.question.title}`,
-          text: `${this.question.text}`,
-        });
       },
       (error) => {
         if (error.status === 400) {

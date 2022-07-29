@@ -1,0 +1,25 @@
+<div class="container">
+  <!-- URL Parameter == TRUE -->
+  <div *ngIf="isParam">
+    <app-question-detail-template
+      [question]="question"
+      [isAnsByCurrentUser]="isAnsByCurrentUser"
+      [isQueByCurrentUser]="isQuesByCurrentUser"
+      [isLikedByUser]="isLikedByUser"
+      [isLiked]="isLiked"
+      [isAns]="isAns"
+      [numberOfLikes]="numberOfLikes"
+      (likeButtonClicked)="likeButton($event)"
+      (unlikeButtonClicked)="unlikeButton($event)"
+    ></app-question-detail-template>
+  </div>
+  <!-- URL Parameter == FALSE -->
+  <div *ngIf="!isParam">
+    <div class="card">
+      <h3 class="mt-4 mb-4">All Questions</h3>
+    </div>
+    <app-question-list-template
+      [Questions]="questions"
+    ></app-question-list-template>
+  </div>
+</div>

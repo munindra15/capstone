@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 m-3">
+      <h3 class="my-5">Answer the question</h3>
+      <div class="m-2">
+        <div class="card border">
+          <div class="card-footer">
+            <h4 class="my-3">{{ question?.title }}</h4>
+          </div>
+        </div>
+        <!--  -->
+        <!-- Answer the Question -->
+        <div *ngIf="!isAnswerParam">
+          <app-answer-form-template
+            (formButtonClicked)="saveAnswer($event)"
+          ></app-answer-form-template>
+        </div>
+
+        <!--  -->
+        <!-- Edit Answer Form -->
+        <!--  -->
+        <div *ngIf="isAnswerParam">
+          <app-answer-form-template
+            [fetchedAnswer]="fetchedAnswer.text"
+            (deleteAnswerButtonClicked)="deleteAnswer()"
+            (formButtonClicked)="saveEditedAnswer($event)"
+          ></app-answer-form-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

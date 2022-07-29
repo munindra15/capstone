@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AuthenticationService } from '../auth/authentication.service';
 import { owner, questions } from '../models/question.model';
 import { DataService } from '../services/data.service';

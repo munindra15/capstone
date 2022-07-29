@@ -6,13 +6,16 @@
   color: #fff;
   background-size: 200% auto;
   transition: 1s;
-}
 
-button {
   outline: none;
   border: none;
 }
 
 button:hover {
   background-position: right;
+}
+
+.fade-bg {
+  background-color: hsla(0, 0%, 0%, 0.5);
+  transition: 4s ease;
 }

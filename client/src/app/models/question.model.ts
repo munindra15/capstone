@@ -29,3 +29,8 @@ export interface questions {
   dislikedBy: string;
   isEdited: Boolean;
 }
+
+export interface questionForm {
+  text: string;
+  title: string;
+}

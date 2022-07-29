@@ -81,37 +81,7 @@ button:hover {
   height: 100%;
 }
 
-.card-footer {
-  border: none !important;
-}
 
-.answers-bg {
-  background-color: #414141;
-  color: #fff;
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  display: inline-block;
-  text-align: center;
-  transition-duration: 1s;
-}
-.answers {
-  line-height: 50px;
-}
 
-.answers-bg:hover {
-  background-color: #5126d2;
-  transition-duration: 1s;
-  transition: cubic-bezier();
-}
 
-.counter-bg {
-  background-color: #fff;
-  color: #282a38;
-  border: 0.01rem #838383 solid;
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  display: inline-block;
-  text-align: center;
-}
+
