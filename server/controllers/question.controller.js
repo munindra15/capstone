@@ -111,6 +111,32 @@ const editQuestion = async (req, res) => {
   }
 };
 
+const deleteQuestion = async (req, res) => {
+  question = new Question();
+  questionId = req.params.questionId;
+  userId = req.params.userId;
+  try {
+    await Question.deleteOne({ _id: questionId }).then(
+      User.findByIdAndUpdate(
+        userId,
+        { $pull: { questions: questionId } },
+        { new: true, useFindAndModify: false }
+      ).exec((err) => {
+        if (err) {
+          res.json({ success: false, message: err });
+        } else
+          res.json({
+            success: true,
+            message: "deleted successfully",
+            message2: question.owner,
+          });
+      })
+    );
+  } catch (err) {
+    res.json(err);
+  }
+};
+
 const likeQuestion = async (req, res) => {
   try {
     await Question.findOne({ _id: req.params.questionId }).exec(
@@ -222,4 +248,5 @@ module.exports = {
   editQuestion,
   likeQuestion,
   unlikeQuestion,
+  deleteQuestion,
 };

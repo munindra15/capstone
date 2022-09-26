@@ -76,6 +76,11 @@ router
   .route("/:questionId/unlikeQuestion")
   .put(authorization.verifyToken, ctrlQuestion.unlikeQuestion);
 
+//DeleteQuestion
+router
+  .route("/:userId/deleteQuestion/:questionId")
+  .delete(authorization.verifyToken, ctrlQuestion.deleteQuestion);
+
 //
 //
 //
@@ -95,5 +100,15 @@ router
 router
   .route("/:answerid/editAnswer")
   .put(authorization.verifyToken, ctrlAnswer.editAnswer);
+
+//Fetch answer
+router
+  .route("/answer/:answerid")
+  .get(authorization.verifyToken, ctrlAnswer.fetchAnswer);
+
+//DeleteAnswer
+router
+  .route("/:questionId/deleteAnswer/:answerId")
+  .delete(authorization.verifyToken, ctrlAnswer.deleteAnswer);
 
 module.exports = router;

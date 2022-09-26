@@ -68,7 +68,6 @@ userSchema.methods.generateJwt = function () {
       _id: this._id,
       name: this.name,
       email: this.email,
-      name: this.name,
       exp: parseInt(expiry.getTime() / 1000),
     },
     process.env.ACCESS_TOKEN_SECRET

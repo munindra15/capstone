@@ -61,4 +61,48 @@ const editAnswer = async (req, res) => {
     console.error(err);
   }
 };
-module.exports = { createAnswer, fetchAnswers, editAnswer };
+
+//FETCH single answer
+const fetchAnswer = async (req, res) => {
+  const answerId = req.params.answerid;
+  try {
+    await Answer.findOne({ _id: answerId }).exec((err, answer) => {
+      if (err) {
+        return res.status(400).send({ message: getErrorMessage(err) });
+      } else {
+        res.json(answer);
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//DELETE Answer
+const deleteAnswer = async (req, res) => {
+  answerId = req.params.answerId;
+  questionId = req.params.questionId;
+  try {
+    await Answer.deleteOne({ _id: answerId }).then(
+      Question.findByIdAndUpdate(
+        questionId,
+        { $pull: { answers: answerId } },
+        { new: true, useFindAndModify: false }
+      ).exec((err) => {
+        if (err) {
+          res.json({ succes: false, message: err });
+        } else res.json({ success: true, message: "deleted successfully" });
+      })
+    );
+  } catch (err) {
+    res.json(err);
+  }
+};
+
+module.exports = {
+  createAnswer,
+  fetchAnswers,
+  editAnswer,
+  fetchAnswer,
+  deleteAnswer,
+};
