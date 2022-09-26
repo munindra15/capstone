@@ -50,6 +50,10 @@ const routes: Routes = [
     component: QuestionComponent,
   },
   {
+    path: 'about-us',
+    component: AboutUsComponent,
+  },
+  {
     path: 'questions/:questionid',
     component: QuestionComponent,
     canActivate: [AuthGuard],

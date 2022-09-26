@@ -115,19 +115,21 @@ export class UserProfileComponent implements OnInit {
   }
 
   editToggle(): void {
-    
     this.getUser(this.authService.getUserId());
-    this.downloadUrl = this.currentUser.profile_pic;
-    // console.log('isEdit: ', this.isEdit);
-    // console.log('isEdit: ', this.currentUser.dob);
-    //Initialize default database values to the form inputs
-    this.form.patchValue({
-      name: `${this.currentUser.name}`,
-      email: `${this.currentUser.email}`,
-      username: `${this.currentUser.username}`,
-      dob: `${this.currentUser.date_of_birth}`,
-      bio: `${this.currentUser.bio}`,
-    });
+    if (this.currentUser) {
+      this.isEdit = true;
+      this.downloadUrl = this.currentUser.profile_pic;
+      // console.log('isEdit: ', this.isEdit);
+      // console.log('isEdit: ', this.currentUser.dob);
+      //Initialize default database values to the form inputs
+      this.form.patchValue({
+        name: `${this.currentUser.name}`,
+        email: `${this.currentUser.email}`,
+        username: `${this.currentUser.username}`,
+        dob: `${this.currentUser.date_of_birth}`,
+        bio: `${this.currentUser.bio}`,
+      });
+    }
   }
 
   onFileSelected(event: any): void {
@@ -146,7 +148,6 @@ export class UserProfileComponent implements OnInit {
     const { uploadProgress$, downloadUrl$ } =
       this.firebaseService.uploadFileAndGetMetadata(
         this.currentFileUpload,
-
         mediaFolderPath,
         userName
       );
