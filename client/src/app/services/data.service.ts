@@ -43,15 +43,18 @@ export class DataService {
 
   //Fetch User Profile
   public getUserProfile(userId: string) {
-    return this.http.get(this.SERVER_API + '/api/' + userId + '/profile').pipe(
-      switchMap((user) => {
-        return of(user);
-      }),
-      catchError((e) => {
-        console.error(e.error);
-        return throwError('Failed to fetch user profile');
-      })
-    );
+    return this.http
+      .get<User>(this.SERVER_API + '/api/' + userId + '/profile')
+      .pipe(
+        switchMap((user) => {
+          user.date_of_birth = new Date(user.date_of_birth);
+          return of(user);
+        }),
+        catchError((e) => {
+          console.error(e.error);
+          return throwError('Failed to fetch user profile');
+        })
+      );
   }
 
   //Update User Profile

@@ -23,7 +23,7 @@
           </div>
         </div>
         <div class="col-md-2">
-          <button class="profile-edit-btn" (click)="editToggle()">
+          <button class="btn btn-primary" (click)="editToggle()">
             Edit Profile
           </button>
         </div>
@@ -32,7 +32,7 @@
         <div class="col-md-4">
           <div class="bg-profile">
             <div class="profile-data-counter">
-              <p>Stats</p>
+              <h2 class="display-6"><strong>Stats</strong></h2>
               <span>Questions asked - {{ totalQuestions }}</span
               ><br />
               <span>Answers given - {{ totalAnswers }}</span>
@@ -49,40 +49,46 @@
                 aria-labelledby="home-tab"
               >
                 <div class="row">
-                  <p>User Details</p>
-                  <div class="col-md-4">
-                    <label>Username</label>
-                  </div>
-                  <div class="col-md-4">
-                    <p>{{ currentUser?.username }}</p>
-                  </div>
-                </div>
+                  <h2 class="display-6"><strong>User Details</strong></h2>
 
-                <div class="row">
-                  <div class="col-md-4">
-                    <label>Name</label>
+                  <div class="row">
+                    <div class="col-md-4"><label>Username:</label></div>
+                    <div class="col-md-8">
+                      <p>{{ currentUser?.username }}</p>
+                    </div>
                   </div>
-                  <div class="col-md-4">
-                    <p>{{ currentUser?.name }}</p>
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <label>Name:</label>
+                    </div>
+                    <div class="col-md-8">
+                      <p>{{ currentUser?.name }}</p>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              <div class="row">
-                <div class="col-md-4">
-                  <label>Email</label>
-                </div>
-                <div class="col-md-4">
-                  <p>{{ currentUser?.email }}</p>
-                </div>
-              </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <label>Email:</label>
+                    </div>
+                    <div class="col-md-8">
+                      <p>{{ currentUser?.email }}</p>
+                    </div>
+                  </div>
 
-              <div class="row">
-                <div class="col-md-4">
-                  <label>Date of Birth</label>
-                </div>
-                <div class="col-md-4">
-                  <p>{{ currentUser?.date_of_birth | date: "MMMM d, y" }}</p>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <label>Date of Birth:</label>
+                    </div>
+                    <div class="col-md-8">
+                      <p>
+                        {{
+                          getFormattedDate(currentUser?.date_of_birth)
+                            | date: "MMMM d, y"
+                        }}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -90,123 +96,125 @@
         </div>
       </div>
     </div>
-    <!--  -->
-    <!-- isEdit = TRUE -->
-    <!--  -->
-    <div *ngIf="isEdit">
-      <form [formGroup]="form">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="profile-img">
-              <img
-                class=""
-                onerror="this.onerror=null;this.src=`../assets/images/user.png`"
-                [src]="downloadUrl"
-              />
-              <h5 class="card-title">Select a file for upload:</h5>
-              <input
-                type="file"
-                (change)="onFileSelected($event)"
-                accept=".png,.jpg"
-              />
-              <input type="button" (click)="upload()" value="upload" />
+    <div>
+      <!--  -->
+      <!-- isEdit = TRUE -->
+      <!--  -->
+      <div *ngIf="isEdit">
+        <form [formGroup]="form">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="profile-img">
+                <img
+                  class=""
+                  onerror="this.onerror=null;this.src=`../assets/images/user.png`"
+                  [src]="downloadUrl"
+                />
+                <h5 class="card-title">Select a file for upload:</h5>
+                <input
+                  type="file"
+                  (change)="onFileSelected($event)"
+                  accept=".png,.jpg"
+                />
+                <input type="button" (click)="upload()" value="upload" />
+              </div>
             </div>
-          </div>
-          <div class="col-md-6">
-            <div class="profile-head">
-              <div class="bg-profile">
-                <label class="text-muted">Name</label>
-                <!-- <input
+            <div class="col-md-6">
+              <div class="profile-head">
+                <div class="bg-profile">
+                  <label class="text-muted">Name</label>
+                  <!-- <input
                   name="userFullName"
                   formControlName="name"
                   type="text"
                   class="form-control"
                   placeholder="{{ currentUser?.name }}"
                 /> -->
-                <input
-                  value="{{ currentUser?.name }}"
-                  name="userFullName"
-                  formControlName="name"
-                  type="text"
-                  placeholder="{{ currentUser?.name }}"
-                  class="form-control"
-                />
-                <label class="text-muted mt-4">Bio</label>
-                <textarea
-                  value="{{ currentUser?.bio }}"
-                  name="userBio"
-                  placeholder="Enter your bio here..."
-                  formControlName="bio"
-                  type="text"
-                  class="form-control"
-                  rows="6"
-                ></textarea>
+                  <input
+                    value="{{ currentUser?.name }}"
+                    name="userFullName"
+                    formControlName="name"
+                    type="text"
+                    placeholder="{{ currentUser?.name }}"
+                    class="form-control"
+                  />
+                  <label class="text-muted mt-4">Bio</label>
+                  <textarea
+                    value="{{ currentUser?.bio }}"
+                    name="userBio"
+                    placeholder="Enter your bio here..."
+                    formControlName="bio"
+                    type="text"
+                    class="form-control"
+                    rows="6"
+                  ></textarea>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="row mt-4">
-          <div class="col-md-4"></div>
-          <div class="col-md-8">
-            <div class="bg-profile">
-              <div class="tab-content profile-tab" id="myTabContent">
-                <div class="row">
-                  <p><strong>User Details</strong></p>
-                  <div class="col-md-6">
-                    <label class="mt-2">Username</label>
-                    <input
-                      value="{{ currentUser?.username }}"
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter your username here..."
-                      formControlName="username"
-                      name="userName"
-                    />
+          <div class="row mt-4">
+            <div class="col-md-4"></div>
+            <div class="col-md-8">
+              <div class="bg-profile">
+                <div class="tab-content profile-tab" id="myTabContent">
+                  <div class="row">
+                    <p><strong>User Details</strong></p>
+                    <div class="col-md-6">
+                      <label class="mt-2">Username</label>
+                      <input
+                        value="{{ currentUser?.username }}"
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter your username here..."
+                        formControlName="username"
+                        name="userName"
+                      />
+                    </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <label class="mt-2">Email</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="{{ currentUser?.email }}"
-                      placeholder="Enter your email here..."
-                      formControlName="email"
-                      name="userEmail"
-                    />
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="mt-2">Email</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="{{ currentUser?.email }}"
+                        placeholder="Enter your email here..."
+                        formControlName="email"
+                        name="userEmail"
+                      />
+                    </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <label class="mt-2">Date of Birth</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="{{
-                        currentUser?.date_of_birth | date: 'MMMM, d, y'
-                      }}"
-                      placeholder="Enter date of birth here..."
-                      formControlName="dob"
-                      name="userDob"
-                    />
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="mt-2">Date of Birth</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="{{
+                          currentUser?.date_of_birth | date: 'MMMM, d, y'
+                        }}"
+                        placeholder="Enter date of birth here..."
+                        formControlName="dob"
+                        name="userDob"
+                      />
+                    </div>
                   </div>
+                  <button
+                    type="submit"
+                    class="mt-3 btn btn-primary"
+                    (click)="submit()"
+                  >
+                    Submit
+                  </button>
                 </div>
-                <button
-                  type="submit"
-                  class="mt-3 btn btn-primary"
-                  (click)="submit()"
-                >
-                  Submit
-                </button>
               </div>
             </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
+      <!--  -->
+      <!-- END -->
+      <!--  -->
     </div>
-    <!--  -->
-    <!-- END -->
-    <!--  -->
   </div>
 </div>

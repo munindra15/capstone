@@ -57,6 +57,10 @@ export class UserProfileComponent implements OnInit {
     );
   }
 
+  getFormattedDate(date: Date) {
+    return date?.toISOString().substring(0, date.toISOString().length - 1);
+  }
+
   countFields(user: any, field: string) {
     //If count is questions
     if ((field = 'questions ')) {
@@ -115,10 +119,14 @@ export class UserProfileComponent implements OnInit {
   }
 
   editToggle(): void {
+    const date = new Date();
+    const offset = date.getTimezoneOffset();
     this.getUser(this.authService.getUserId());
+    console.log(offset);
     if (this.currentUser) {
       this.isEdit = true;
       this.downloadUrl = this.currentUser.profile_pic;
+
       // console.log('isEdit: ', this.isEdit);
       // console.log('isEdit: ', this.currentUser.dob);
       //Initialize default database values to the form inputs

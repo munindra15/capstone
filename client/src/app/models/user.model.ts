@@ -4,6 +4,6 @@ export interface User {
   password: string;
   username: string;
   bio: string;
-  date_of_birth: string;
+  date_of_birth: Date;
   profile_pic: string;
 }

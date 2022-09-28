@@ -33,7 +33,6 @@ import { HomeBannerComponent } from './home-banner/home-banner.component';
 import { QuestionListTemplateComponent } from './questionGroup/question-list-template/question-list-template.component';
 import { QuestionDetailTemplateComponent } from './questionGroup/question-detail-template/question-detail-template.component';
 import { QuestionFormTemplateComponent } from './questionGroup/question-form-template/question-form-template.component';
-import { EditQuestionFormTemplateComponent } from './questionGroup/edit-question-form-template/edit-question-form-template.component';
 import { AnswerFormTemplateComponent } from './answerGroup/answer-form-template/answer-form-template.component';
 
 const routes: Routes = [
@@ -105,7 +104,6 @@ const routes: Routes = [
     QuestionListTemplateComponent,
     QuestionDetailTemplateComponent,
     QuestionFormTemplateComponent,
-    EditQuestionFormTemplateComponent,
     AnswerFormTemplateComponent,
   ],
   imports: [

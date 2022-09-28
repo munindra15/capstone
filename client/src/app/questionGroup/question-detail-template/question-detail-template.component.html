@@ -4,11 +4,11 @@
       <h2 class="blog-post-title">{{ question?.title }}</h2>
       <p class="blog-post-meta text-muted fs-6">
         {{ question?.issued_On | date: "longDate" }} by
-        <a [routerLink]="['/']">{{ question?.owner?.name }}</a>
+        <strong>{{ question?.owner?.name }}</strong>
       </p>
     </div>
     <div class="col-md-2" *ngIf="isQueByCurrentUser">
-      <a class="ask-button" href="/{{ question?._id }}/editQuestion"
+      <a class="btn btn-primary" href="/{{ question?._id }}/editQuestion"
         >Edit Question</a
       >
     </div>
