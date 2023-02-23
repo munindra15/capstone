@@ -15,7 +15,7 @@ const app = express();
 
 //CORS
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "https://qaverse.netlify.app");
   //res.setHeader("Access-Control-ALlow-Origin", "http://localhost:4200");
   // res.setHeader(
   //   "Access-Control-Allow-Origin",
@@ -23,7 +23,7 @@ app.use((req, res, next) => {
   // );
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET, POST, PUT, PATCH, POST, DELETE, OPTIONS"
+    "GET,POST,PUT,PATCH,POST,DELETE,OPTIONS"
   );
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader(
