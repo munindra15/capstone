@@ -12,7 +12,7 @@ import { User } from '../models/user.model';
 })
 export class DataService {
   //private SERVER_API = 'http://localhost:3000';
-  private SERVER_API = 'https://qaverse.herokuapp.com';
+  private SERVER_API = 'https://qaverse.onrender.com';
   private GET_QUESTION_API = `${this.SERVER_API}/api/questions`;
 
   constructor(private http: HttpClient, private router: Router) {}
