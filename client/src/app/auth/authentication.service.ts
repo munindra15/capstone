@@ -35,7 +35,7 @@ export class AuthenticationService {
   TOKEN_KEY = 'auth-token';
   private user$ = new Subject<User>();
   //private server_route = 'http://localhost:3000';
-  private server_route = 'https://qaverse.herokuapp.com';
+  private server_route = 'https://qaverse.onrender.com';
 
   private token?: string;
   public isLoggedIn: boolean = false;
